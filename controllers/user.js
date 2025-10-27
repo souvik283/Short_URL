@@ -1,4 +1,5 @@
 const user = require("../models/user")
+import { v4 as uuidv4 } from "uuid"
 
 async function userSignup(req, res) {
     const {fullname, email, password} = req.body
@@ -11,22 +12,24 @@ async function userSignup(req, res) {
       password  
     })
 
-    return res.redirect("/")
+    return res.render("login")
 }
 
 async function userLogin(req, res) {
     const {email, password} = req.body
-    if (!email||!fullname||!password) {
+
+    if (!email||!password) {
         return res.status(400).json({ msg: "Invalid User Data" })
     }
 
-    let user =await user.findOne({email: email, password: password})
+    let user2 =await user.findOne({email: email, password: password})
 
-    if (!user) {
+    if (!user2) {
       return res.render("login", {
         error: "Invalid email or password"
       })
     }
+    const sessionId = uuidv4()
     return res.redirect("/")
 }
 
