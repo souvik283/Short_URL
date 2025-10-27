@@ -2,7 +2,7 @@ const express = require("express")
 const path = require("path")
 const app = express()
 const staticRoute = require("./routes/staticRoute")
-
+const userRoute = require("./routes/user")
 const urlRoute = require("./routes/url")
 const {connectMongoose} = require("./connect")
 // const { use } = require("react")
@@ -25,7 +25,7 @@ app.use(express.json())
 app.use(express.urlencoded({extended: false}))
 
 app.use("/", staticRoute)
-
+app.use("/user", userRoute)
 app.use("/url", urlRoute)
 
 app.listen(port, ()=>{

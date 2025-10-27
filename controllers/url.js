@@ -12,7 +12,9 @@ async function generateNewUrl(req, res) {
         redirectUrl: body1.url,
         visitHistory: []
     })
-    return res.render("index", { id: shortID })
+    const allurls = await URL.find({})
+    return res.render("index", { id: shortID, urls: allurls });
+
 }
 
 async function redirectToUrl(req, res) {
