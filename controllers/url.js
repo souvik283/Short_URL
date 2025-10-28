@@ -7,13 +7,18 @@ async function generateNewUrl(req, res) {
     if (!body1) {
         return res.status(400).json({ msg: "Invalid User Data" })
     }
+
+
     await URL.create({
         shortId: shortID,
         redirectUrl: body1.url,
-        visitHistory: []
+        visitHistory: [],
+        createdBy: req.user._id
     })
-    const allurls = await URL.find({})
-    return res.render("index", { id: shortID, urls: allurls });
+    const userUrls = await URL.find({createdBy: req.user._id})
+    
+    // return res.render("index", { id: shortID, urls: userUrls });
+    return res.redirect("/")
 
 }
 

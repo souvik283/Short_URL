@@ -2,6 +2,7 @@ const { Timestamp } = require("bson")
 const { timeStamp } = require("console")
 const mongoose = require("mongoose")
 const { type } = require("os")
+const { ref } = require("process")
 
 const urlschema = new mongoose.Schema({
     shortId: {
@@ -15,9 +16,11 @@ const urlschema = new mongoose.Schema({
     },
     visitHistory: [
         { timestamps: {} }
-    ]
-
-
+    ],
+    createdBy: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "users"
+    }
 }, { timestamps: true })
 
 const URL = mongoose.model("url", urlschema)
