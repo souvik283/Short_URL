@@ -18,8 +18,8 @@ async function userSignup(req, res) {
 }
 
 async function userLogin(req, res) {
-    const {email, password} = req.body
-
+    const {email, password}= req.body
+  //  console.log(email, password)
     if (!email||!password) {
         return res.status(400).json({ msg: "Invalid User Data" })
     }
@@ -32,8 +32,11 @@ async function userLogin(req, res) {
       })
     }
     const token = setUser(user2)
+    
     res.cookie("uid", token)
     return res.redirect("/")
+    
+    // return res.json({token})
 }
 
 

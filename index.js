@@ -6,7 +6,7 @@ const userRoute = require("./routes/user")
 const urlRoute = require("./routes/url")
 const {connectMongoose} = require("./connect")
 const cookieParser = require("cookie-parser")
-const {restrictToUserOnly, CheckAuth}= require("./middlewares/auth")
+const {authorizedUserOnly, restrictTo}= require("./middlewares/auth")
 // const { use } = require("react")
 const port = 4001;
 
@@ -26,10 +26,11 @@ app.set("views", path.resolve("./views"))
 app.use(express.json())
 app.use(express.urlencoded({extended: false}))
 app.use(cookieParser())
+app.use(authorizedUserOnly)
 
-app.use("/",CheckAuth, staticRoute)
+app.use("/", staticRoute)
 app.use("/user", userRoute)
-app.use("/url",restrictToUserOnly, urlRoute)
+app.use("/url", restrictTo(["NORMAL"]), urlRoute)
 
 app.listen(port, ()=>{
     console.log(`server started at port: ${port}`)
