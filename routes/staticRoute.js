@@ -4,7 +4,15 @@ const {restrictTo} = require("../middlewares/auth")
 
 const router = express.Router()
 
-router.get("/",restrictTo(["NORMAL"]) ,async(req, res)=>{
+router.get("/url/admin",restrictTo(["ADMIN"]) ,async(req, res)=>{
+    // if (!req.user) {
+    //     return res.render("login")
+    // }
+    const userUrls = await URL.find({})
+    return res.render("index", {urls: userUrls})
+})
+
+router.get("/",restrictTo(["NORMAL", "ADMIN"]) ,async(req, res)=>{
     // if (!req.user) {
     //     return res.render("login")
     // }

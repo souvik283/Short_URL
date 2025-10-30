@@ -30,7 +30,7 @@ app.use(authorizedUserOnly)
 
 app.use("/", staticRoute)
 app.use("/user", userRoute)
-app.use("/url", restrictTo(["NORMAL"]), urlRoute)
+app.use("/url", restrictTo(["NORMAL", "ADMIN"]), urlRoute)
 
 app.listen(port, ()=>{
     console.log(`server started at port: ${port}`)
